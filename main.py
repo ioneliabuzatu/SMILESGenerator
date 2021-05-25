@@ -2,10 +2,10 @@ import torch
 from torch.utils.data import DataLoader
 
 import config
-from dataset import SmilesDataset
+from utils.dataset import SmilesDataset
 from model import generative_model
 from tqdm import tqdm
-from data import load_train_and_val_batches_data
+from utils.data import load_train_and_val_batches_data
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Running on {device}")
