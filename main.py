@@ -1,5 +1,4 @@
 import torch
-from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import DataLoader
 from utils.data import load_train_and_val_batches_data
 
@@ -9,7 +8,7 @@ from model import generative_model
 from tqdm import tqdm
 from utils.data import load_train_and_val_batches_data
 
-writer = SummaryWriter() # config.tensorboard
+writer = config.tensorboard
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Running on {device}")
@@ -17,8 +16,8 @@ print(f"Running on {device}")
 
 @torch.enable_grad()
 def train(device, save=False):
-    torch.manual_seed(config.seed)
-    torch.cuda.manual_seed_all(config.seed)
+    torch.manual_seed(1112)
+    torch.cuda.manual_seed_all(1112)
 
     train_batches, val_batches = load_train_and_val_batches_data()
     train_dataset_already_batched = SmilesDataset(train_batches)
@@ -26,9 +25,12 @@ def train(device, save=False):
     len_dataloader = len(dataloader)
     print(f"DataLoader length: {len_dataloader}")
     model = generative_model(
-        config.vocabs_size, config.hidden_size, config.output_size, config.embedding_dimension, config.n_layers
+        40, config.hidden_size, 40, config.embedding_dimension, config.n_layers,
+        bidirectional=config.bidirectional
     )
     print(model)
+
+    model.load_state_dict(torch.load(config.pretrained_filepath))
     model = model.to(device)
     model.train()
 
@@ -46,6 +48,7 @@ def train(device, save=False):
             hidden = model.init_hidden(batch_size)
             hidden = (hidden[0].to(device), hidden[1].to(device))
 
+            model.zero_grad()
             optimizer.zero_grad()
 
             loss = 0
@@ -58,16 +61,15 @@ def train(device, save=False):
 
             epoch_loss += loss.item() / sequence_length
 
-            writer.add_scalar('Loss/train', loss.item() / sequence_length, scalars_loss_step)
+            writer.add_scalar('train_loss', loss.item() / sequence_length, scalars_loss_step)
             scalars_loss_step += 1
 
-            if i_batch == 3:
-                break
-        # writer.add_scalar('Loss/x_epoch', epoch_loss, epoch)
+            # if i_batch == 3:
+            #     break
         print(f"Done epoch # {epoch} - loss {epoch_loss}")
         if save:
             torch.save(model.state_dict(), config.checkpoint_filepath)
 
 
 if __name__ == "__main__":
-    train(device)
+    train(device, save=True)
