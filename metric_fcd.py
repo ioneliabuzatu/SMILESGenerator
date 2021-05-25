@@ -6,7 +6,9 @@ import pandas as pd
 from fcd import canonical_smiles, get_predictions, load_ref_model, calculate_frechet_distance
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--submission", type=str, default="resources/my_smiles.txt")
+parser.add_argument("--submission", type=str, default="utils/resources/my_smiles.txt")
+parser.add_argument("--teststats", type=str, default="utils/resources/test_stats.p")
+parser.add_argument("--traindata", type=str, default="utils/resources/smiles_train.txt")
 args = parser.parse_args()
 
 
@@ -20,7 +22,7 @@ def get_metrics():
     mu_gen = np.mean(act_gen, axis=0)
     sigma_gen = np.cov(act_gen.T)
 
-    with open("resources/test_stats.p", 'rb') as f:
+    with open(args.teststats, 'rb') as f:
         mu_test, sigma_test = pickle.load(f)
 
     fcd_value = calculate_frechet_distance(
@@ -37,7 +39,7 @@ def get_metrics():
     uniqueness = len(smiles_unique) / len(smiles_gen)
     print("Uniqueness: ", uniqueness)
 
-    with open("resources/smiles_train.txt") as f:
+    with open(args.traindata) as f:
         smiles_train = {s for s in f.read().split() if s}
 
     smiles_novel = smiles_unique - smiles_train

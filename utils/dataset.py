@@ -1,15 +1,13 @@
 from torch.utils.data import Dataset
 
-from utils import load_train_and_val_batches_data
-
 
 class SmilesDataset(Dataset):
     """smiles dataset."""
 
-    def __init__(self):
+    def __init__(self, train_batches):
         """ """
 
-        self.train_batches, self.val_batches = load_train_and_val_batches_data()
+        self.train_batches = train_batches
 
     def __len__(self):
         return len(self.train_batches)
