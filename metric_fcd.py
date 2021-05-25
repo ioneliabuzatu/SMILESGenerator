@@ -1,27 +1,49 @@
 import argparse
-import os
-import shutil
-import sys
-import tempfile
+import pickle
+
+import numpy as np
+import pandas as pd
+from fcd import canonical_smiles, get_predictions, load_ref_model, calculate_frechet_distance
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--submission", type=str)
-parser.add_argument("--target", type=str, default='evaluation.tar')
-
+parser.add_argument("--submission", type=str, default="resources/my_smiles.txt")
 args = parser.parse_args()
 
-with tempfile.TemporaryDirectory() as tmpdir:
-    shutil.unpack_archive(args.target, tmpdir)
-    print(f'Unpacked evaluation code/data to {tmpdir}')
 
-    sys.path.insert(0, tmpdir)  # prepend on package search path
-    from evaluation.evaluate_submission import get_metric  # import unpacked library
+def get_metrics():
+    model = load_ref_model()
 
-    args.trainset = os.path.join(tmpdir, 'evaluation/data/smiles_train.txt')
-    args.teststats = os.path.join(tmpdir, 'evaluation/data/test_stats.p')
+    smiles_gen = pd.read_csv(args.submission, header=None)[0]
+    smiles_gen_can = [w for w in canonical_smiles(smiles_gen) if w is not None]
 
-    metric_name = 'fcd'
-    metric_value = get_metric(args, metric_name)
-    print('#################################################################################################################################################')
-    print(f'Metric name: {metric_name}')
-    print(metric_value)
+    act_gen = get_predictions(model, smiles_gen_can)
+    mu_gen = np.mean(act_gen, axis=0)
+    sigma_gen = np.cov(act_gen.T)
+
+    with open("resources/test_stats.p", 'rb') as f:
+        mu_test, sigma_test = pickle.load(f)
+
+    fcd_value = calculate_frechet_distance(
+        mu1=mu_gen,
+        mu2=mu_test,
+        sigma1=sigma_gen,
+        sigma2=sigma_test)
+    print('FCD: ', fcd_value)
+
+    validity = len(smiles_gen_can) / len(smiles_gen)
+    print("Validity: ", validity)
+
+    smiles_unique = set(smiles_gen_can)
+    uniqueness = len(smiles_unique) / len(smiles_gen)
+    print("Uniqueness: ", uniqueness)
+
+    with open("resources/smiles_train.txt") as f:
+        smiles_train = {s for s in f.read().split() if s}
+
+    smiles_novel = smiles_unique - smiles_train
+    novelty = len(smiles_novel) / len(smiles_gen)
+    print("Novelty: ", novelty)
+
+
+if __name__ == '__main__':
+    get_metrics()
