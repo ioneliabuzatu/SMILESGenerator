@@ -63,4 +63,4 @@ def generate_smiles(generated_smiles=300):
     print("File created for submission with 10k smiles in my_smiles.txt")
 
 
-generate_smiles(generated_smiles=1000)
+generate_smiles(generated_smiles=2000)

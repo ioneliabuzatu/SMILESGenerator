@@ -3,11 +3,14 @@ import experiment_buddy
 
 import torch.nn as nn
 
-host = ""
+host = "mila"
 hidden_size = 100  # 1024
 embedding_dimension = 248 # 248
-n_layers = 1 # 3
+n_layers = 2 # 3
 lr = 0.0005
+optimizer = "adam"
+momentum = 0.96
+bidirectional = False
 
 batch_size = 128
 vocabs_size = 40
@@ -19,8 +22,6 @@ epochs = 200
 seed = 1112
 
 criterion = nn.CrossEntropyLoss()
-optimizer = "adam"
-momentum = 0.96
 
 if host == "":
     checkpoint_filepath = "checkpoint_smiles.pt"
