@@ -46,7 +46,7 @@ def generate_smiles(generated_smiles=300):
     n_layers = 3
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Running on {device}")
+    print(f"Running on device: {device}")
     f = np.load(SMILES_DATA_FILEPATH, allow_pickle=True)
     vocabs = list(f['vocabs'])
     model = generative_model(vocabs_size, hidden_size, output_size, embedding_dimension, n_layers)
@@ -63,4 +63,4 @@ def generate_smiles(generated_smiles=300):
     print("File created for submission with 10k smiles in my_smiles.txt")
 
 
-generate_smiles()
+generate_smiles(generated_smiles=10000)
