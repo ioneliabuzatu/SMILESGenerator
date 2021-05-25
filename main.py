@@ -1,5 +1,4 @@
 import torch
-from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import DataLoader
 from utils.data import load_train_and_val_batches_data
 
@@ -9,7 +8,7 @@ from model import generative_model
 from tqdm import tqdm
 from utils.data import load_train_and_val_batches_data
 
-writer = SummaryWriter() # config.tensorboard
+writer = config.tensorboard
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Running on {device}")
@@ -17,8 +16,8 @@ print(f"Running on {device}")
 
 @torch.enable_grad()
 def train(device, save=False):
-    torch.manual_seed(config.seed)
-    torch.cuda.manual_seed_all(config.seed)
+    torch.manual_seed(1112)
+    torch.cuda.manual_seed_all(1112)
 
     train_batches, val_batches = load_train_and_val_batches_data()
     train_dataset_already_batched = SmilesDataset(train_batches)
@@ -26,7 +25,8 @@ def train(device, save=False):
     len_dataloader = len(dataloader)
     print(f"DataLoader length: {len_dataloader}")
     model = generative_model(
-        config.vocabs_size, config.hidden_size, config.output_size, config.embedding_dimension, config.n_layers
+        40, config.hidden_size, 40, config.embedding_dimension, config.n_layers,
+        bidirectional=config.bidirectional
     )
     print(model)
     model = model.to(device)

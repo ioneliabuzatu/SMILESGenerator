@@ -13,13 +13,7 @@ momentum = 0.96
 bidirectional = False
 
 batch_size = 128
-vocabs_size = 40
-output_size = 40
-print_every = 500
-plot_every = 10
-save_every = 1000
 epochs = 200
-seed = 1112
 
 criterion = nn.CrossEntropyLoss()
 
