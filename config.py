@@ -4,29 +4,26 @@ import experiment_buddy
 import torch.nn as nn
 
 host = "mila"
-hidden_size = 100  # 1024
-embedding_dimension = 248 # 248
-n_layers = 2 # 3
+
+hidden_size = 1024
+embedding_dimension = 248
+n_layers = 3
 lr = 0.0005
 optimizer = "adam"
 momentum = 0.96
 bidirectional = False
 
 batch_size = 128
-vocabs_size = 40
-output_size = 40
-print_every = 500
-plot_every = 10
-save_every = 1000
 epochs = 200
-seed = 1112
 
 criterion = nn.CrossEntropyLoss()
 
 if host == "":
-    checkpoint_filepath = "checkpoint_smiles.pt"
+    pretrained_filepath = "Generate-novel-molecules-with-LSTM/generative_model/smiles_generator_model.pt"
+    checkpoint_filepath = "checkpoint_generator_model.pt"
 else:
-    checkpoint_filepath = "/home/mila/g/golemofl/data/smiles-project/checkpoint_smiles.pt"
+    pretrained_filepath = "/home/mila/g/golemofl/data/smiles-project/smiles_generator_model.pt"
+    checkpoint_filepath = "/home/mila/g/golemofl/data/smiles-project/checkpoint_generator_model.pt"
 
 experiment_buddy.register(locals())
 tensorboard = experiment_buddy.deploy(

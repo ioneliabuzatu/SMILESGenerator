@@ -60,7 +60,7 @@ def generate_smiles(generated_smiles=300):
             if set(new_smile) == "C":
                 continue
             file.write(f"{new_smile}\n")
-    print("File created for submission with 10k smiles in my_smiles.txt")
+    print(f"{generated_smiles} more smiles hae been added to my_smiles.txt")
 
 
-generate_smiles(generated_smiles=1000)
+generate_smiles(generated_smiles=10000)

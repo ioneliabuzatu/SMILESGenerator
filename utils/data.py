@@ -4,6 +4,7 @@ import pandas as pd
 import torch
 from torch.autograd import Variable
 from tqdm import tqdm
+import config
 
 
 def added_to_dictionary(smile, dictionary):
@@ -61,7 +62,7 @@ def process_batch(sequences, batch_size, vocabs, cuda):
     return batches[:train_split], batches[train_split:]
 
 
-def crrate_train_and_val_data():
+def create_train_and_val_data():
     from datetime import datetime
 
     start_time = datetime.now()
@@ -106,5 +107,8 @@ def max_length_smile():
 
 
 def load_train_and_val_batches_data():
-    f = torch.load("Generate-novel-molecules-with-LSTM/generative_model/data/smiles/train_val_batches.npz")
+    if not config.host:
+        f = torch.load("Generate-novel-molecules-with-LSTM/generative_model/data/smiles/train_val_batches.npz")
+    else:
+        f = torch.load("/home/mila/g/golemofl/data/smiles-project/train_val_batches.npz")
     return f['train'], f['val']
