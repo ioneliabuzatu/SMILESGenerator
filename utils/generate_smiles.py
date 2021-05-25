@@ -3,13 +3,13 @@ import torch
 from torch.autograd import Variable
 from tqdm import tqdm
 
-import config
 from model import generative_model
 from utils.data import tensor_from_chars_list
 
 SMILES_DATA_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/smiles_data.npz"
 CHECKPOINT_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/smiles_generator_model.pt"
 SUBMISSION_SMILES_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/my_smiles.txt"
+
 
 # SMILES_DATA_FILEPATH = "Generate-novel-molecules-with-LSTM/generative_model/data/smiles/smiles_data.npz"
 # CHECKPOINT_FILEPATH = "Generate-novel-molecules-with-LSTM/generative_model/smiles_generator_model.pt"
@@ -41,13 +41,17 @@ def evaluate(model, vocabs, device, prime_str='!', end_token=" ", temperature=0.
 
 
 def generate_smiles(generated_smiles=300):
+    vocabs_size = 40
+    output_size = 40
+    hidden_size = 1024
+    embedding_dimension = 248
+    n_layers = 3
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Running on {device}")
     f = np.load(SMILES_DATA_FILEPATH, allow_pickle=True)
     vocabs = list(f['vocabs'])
-    model = generative_model(
-        config.vocabs_size, config.hidden_size, config.output_size, config.embedding_dimension, config.n_layers
-    )
+    model = generative_model(vocabs_size, hidden_size, output_size, embedding_dimension, n_layers)
     model = model.to(device)
     model.load_state_dict(torch.load(CHECKPOINT_FILEPATH))
     with open(SUBMISSION_SMILES_FILEPATH, "a") as file:
