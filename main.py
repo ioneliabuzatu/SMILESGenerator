@@ -9,7 +9,7 @@ from model import generative_model
 from tqdm import tqdm
 from utils.data import load_train_and_val_batches_data
 
-writer = config.tensorboard
+writer = SummaryWriter() # config.tensorboard
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Running on {device}")
@@ -46,6 +46,7 @@ def train(device):
             sequence_length = input_smile.size(1)
             hidden = model.init_hidden(batch_size)
             hidden = (hidden[0].to(device), hidden[1].to(device))
+            # hidden = ((hidden[0][0].to(device), hidden[0][1].to(device)),hidden[1].to(device))
 
             optimizer.zero_grad()
 

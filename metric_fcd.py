@@ -30,7 +30,7 @@ def get_metrics():
         mu2=mu_test,
         sigma1=sigma_gen,
         sigma2=sigma_test)
-    print('FCD: ', fcd_value)
+    print(f"FCD: {fcd_value:.3f}")
 
     validity = len(smiles_gen_can) / len(smiles_gen)
     print("Validity: ", validity)
@@ -49,3 +49,14 @@ def get_metrics():
 
 if __name__ == '__main__':
     get_metrics()
+
+
+# FCD:  1.929
+# Validity:  0.8822
+# Uniqueness:  0.8809
+# Novelty:  0.8593
+
+# FCD: 1.481
+# Validity:  0.9138
+# Uniqueness:  0.9131
+# Novelty:  0.8972
