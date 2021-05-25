@@ -130,3 +130,5 @@ dmypy.json
 runs
 wandb
 Generate-novel-molecules-with-LSTM/
+*.pt
+utils/resources/my_smiles_1.4fcd.txt

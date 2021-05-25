@@ -9,14 +9,14 @@ from model import generative_model
 from tqdm import tqdm
 from utils.data import load_train_and_val_batches_data
 
-writer = config.tensorboard
+writer = SummaryWriter() # config.tensorboard
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Running on {device}")
 
 
 @torch.enable_grad()
-def train(device):
+def train(device, save=False):
     torch.manual_seed(config.seed)
     torch.cuda.manual_seed_all(config.seed)
 
@@ -29,14 +29,13 @@ def train(device):
         config.vocabs_size, config.hidden_size, config.output_size, config.embedding_dimension, config.n_layers
     )
     print(model)
-    # model.load_state_dict(torch.load("Generate-novel-molecules-with-LSTM/generative_model/smiles_generator_model.pt"))
     model = model.to(device)
     model.train()
 
     if config.optimizer == "adam":
         optimizer = torch.optim.Adam(model.parameters(), lr=config.lr)
     else:
-        optimizer = torch.optim.SGD(model.parameters(), momentum=config.momentum)
+        optimizer = torch.optim.SGD(model.parameters(), momentum=config.momentum, lr=config.lr)
     scalars_loss_step = 0
     for epoch in tqdm(range(config.epochs)):
         epoch_loss = 0
@@ -59,13 +58,15 @@ def train(device):
 
             epoch_loss += loss.item() / sequence_length
 
-            # writer.add_scalar('Loss/train', loss.item() / sequence_length, scalars_loss_step)
+            writer.add_scalar('Loss/train', loss.item() / sequence_length, scalars_loss_step)
             scalars_loss_step += 1
 
             if i_batch == 3:
                 break
-        writer.add_scalar('Loss/x_epoch', epoch_loss, epoch)
-        torch.save(model.state_dict(), config.checkpoint_filepath)
+        # writer.add_scalar('Loss/x_epoch', epoch_loss, epoch)
+        print(f"Done epoch # {epoch} - loss {epoch_loss}")
+        if save:
+            torch.save(model.state_dict(), config.checkpoint_filepath)
 
 
 if __name__ == "__main__":
