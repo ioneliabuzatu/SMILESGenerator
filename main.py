@@ -9,7 +9,7 @@ from model import generative_model
 from tqdm import tqdm
 from utils.data import load_train_and_val_batches_data
 
-writer = config.tensorboard  # SummaryWriter()
+writer = config.tensorboard
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Running on {device}")
@@ -59,12 +59,13 @@ def train(device):
 
             epoch_loss += loss.item() / sequence_length
 
-            writer.add_scalar('Loss/train', loss.item() / sequence_length, scalars_loss_step)
+            # writer.add_scalar('Loss/train', loss.item() / sequence_length, scalars_loss_step)
             scalars_loss_step += 1
 
             if i_batch == 3:
                 break
         writer.add_scalar('Loss/x_epoch', epoch_loss, epoch)
+        torch.save(model.state_dict(), config.checkpoint_filepath)
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ import experiment_buddy
 
 import torch.nn as nn
 
+host = ""
 hidden_size = 100  # 1024
 embedding_dimension = 248 # 248
 n_layers = 1 # 3
@@ -21,9 +22,14 @@ criterion = nn.CrossEntropyLoss()
 optimizer = "adam"
 momentum = 0.96
 
+if host == "":
+    checkpoint_filepath = "checkpoint_smiles.pt"
+else:
+    checkpoint_filepath = "/home/mila/g/golemofl/data/smiles-project/checkpoint_smiles.pt"
+
 experiment_buddy.register(locals())
 tensorboard = experiment_buddy.deploy(
-    "mila",
+    host,
     sweep_yaml="",
     proc_num=1,
     wandb_kwargs={"entity": "ionelia"}
