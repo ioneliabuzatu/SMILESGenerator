@@ -3,11 +3,11 @@ import torch
 from torch.autograd import Variable
 from tqdm import tqdm
 
-from model import generative_model
+from model import GenerativeMoleculesModel
 from utils.data import tensor_from_chars_list
 
 SMILES_DATA_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/smiles_data.npz"
-CHECKPOINT_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/smiles_generator_model.pt"
+CHECKPOINT_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/checkpoint_generator_model.pt"
 SUBMISSION_SMILES_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/my_smiles.txt"
 # SMILES_DATA_FILEPATH = "Generate-novel-molecules-with-LSTM/generative_model/data/smiles/smiles_data.npz"
 # CHECKPOINT_FILEPATH = "Generate-novel-molecules-with-LSTM/generative_model/smiles_generator_model.pt"
@@ -49,7 +49,7 @@ def generate_smiles(generated_smiles=300):
     print(f"Running on device: {device}")
     f = np.load(SMILES_DATA_FILEPATH, allow_pickle=True)
     vocabs = list(f['vocabs'])
-    model = generative_model(vocabs_size, hidden_size, output_size, embedding_dimension, n_layers)
+    model = GenerativeMoleculesModel(vocabs_size, hidden_size, output_size, embedding_dimension, n_layers)
     model = model.to(device)
     model.load_state_dict(torch.load(CHECKPOINT_FILEPATH))
     with open(SUBMISSION_SMILES_FILEPATH, "a") as file:
@@ -63,4 +63,4 @@ def generate_smiles(generated_smiles=300):
     print("File created for submission with 10k smiles in my_smiles.txt")
 
 
-generate_smiles(generated_smiles=1000)
+generate_smiles(generated_smiles=9000)

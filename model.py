@@ -4,9 +4,9 @@ import torch.nn as nn
 from torch.autograd import Variable
 
 
-class generative_model(nn.Module):
+class GenerativeMoleculesModel(nn.Module):
     def __init__(self, vocabs_size, hidden_size, output_size, embedding_dimension, n_layers, bidirectional=False):
-        super(generative_model, self).__init__()
+        super(GenerativeMoleculesModel, self).__init__()
         self.vocabs_size = vocabs_size
         self.hidden_size = hidden_size
         self.output_size = output_size
