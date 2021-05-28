@@ -7,7 +7,7 @@ from model import generative_model
 from utils.data import tensor_from_chars_list
 
 SMILES_DATA_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/smiles_data.npz"
-CHECKPOINT_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/smiles_generator_model.pt"
+CHECKPOINT_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/checkpoint_generator_model.pt"
 SUBMISSION_SMILES_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/my_smiles.txt"
 # SMILES_DATA_FILEPATH = "Generate-novel-molecules-with-LSTM/generative_model/data/smiles/smiles_data.npz"
 # CHECKPOINT_FILEPATH = "Generate-novel-molecules-with-LSTM/generative_model/smiles_generator_model.pt"
