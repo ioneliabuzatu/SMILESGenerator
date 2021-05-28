@@ -60,3 +60,8 @@ if __name__ == '__main__':
 # Validity:  0.9138
 # Uniqueness:  0.9131
 # Novelty:  0.8972
+
+# FCD: 1.477
+# Validity:  0.9248
+# Uniqueness:  0.9242
+# Novelty:  0.9066
