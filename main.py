@@ -4,7 +4,7 @@ from utils.data import load_train_and_val_batches_data
 
 import config
 from utils.dataset import SmilesDataset
-from model import generative_model
+from model import GenerativeMoleculesModel
 from tqdm import tqdm
 from utils.data import load_train_and_val_batches_data
 
@@ -22,7 +22,7 @@ def train(device, save=False):
     train_dataset_already_batched = SmilesDataset(train_batches)
     len_train_dataset_smiles = len(train_dataset_already_batched)
     print(f"Train dataset length: {len_train_dataset_smiles}")
-    model = generative_model(
+    model = GenerativeMoleculesModel(
         40, config.hidden_size, 40, config.embedding_dimension, config.n_layers,
         bidirectional=config.bidirectional
     )

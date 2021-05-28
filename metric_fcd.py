@@ -15,7 +15,7 @@ args = parser.parse_args()
 def get_metrics():
     model = load_ref_model()
 
-    smiles_gen = pd.read_csv(args.submission, header=None)[0]
+    smiles_gen = pd.read_csv(args.submission, header=None)[0][:10000]
     smiles_gen_can = [w for w in canonical_smiles(smiles_gen) if w is not None]
 
     act_gen = get_predictions(model, smiles_gen_can)
