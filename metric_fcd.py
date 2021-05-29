@@ -60,3 +60,21 @@ if __name__ == '__main__':
 # Validity:  0.9138
 # Uniqueness:  0.9131
 # Novelty:  0.8972
+
+
+# temperature 88
+# FCD: 1.096
+# Validity:  0.9407
+# Uniqueness:  0.9402
+# Novelty:  0.9106
+
+# temperature 90
+# FCD: 1.023
+# Validity:  0.9311
+# Uniqueness:  0.9304
+# Novelty:  0.905
+
+# bidirectional temperature 85
+
+
+
