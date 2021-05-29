@@ -3,7 +3,7 @@ import experiment_buddy
 
 import torch.nn as nn
 
-host = ""
+host = "mila"
 
 hidden_size = 1024
 embedding_dimension = 248
@@ -11,7 +11,7 @@ n_layers = 3
 lr = 0.0005
 optimizer = "adam"
 momentum = 0.96
-bidirectional = True
+bidirectional = False
 
 batch_size = 128
 epochs = 300
