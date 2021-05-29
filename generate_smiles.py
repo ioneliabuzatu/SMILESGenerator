@@ -8,10 +8,10 @@ from model import GenerativeMoleculesModel
 from utils.data import tensor_from_chars_list
 
 SMILES_DATA_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/smiles_data.npz"
-CHECKPOINT_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/checkpoint_generator_model.pt_bidirectional"
-# CHECKPOINT_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/smiles_generator_model.pt"
+# CHECKPOINT_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/checkpoint_generator_model.pt_bidirectional"
+CHECKPOINT_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/smiles_generator_model.pt"
 # CHECKPOINT_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/checkpoint_generator_model.pt"
-SUBMISSION_SMILES_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/my_smiles.txt"
+SUBMISSION_SMILES_FILEPATH = "/home/mila/g/golemofl/data/smiles-project/my_smiles_temperature_{85}.txt"
 # SMILES_DATA_FILEPATH = "Generate-novel-molecules-with-LSTM/generative_model/data/smiles/smiles_data.npz"
 # CHECKPOINT_FILEPATH = "Generate-novel-molecules-with-LSTM/generative_model/smiles_generator_model.pt"
 # SUBMISSION_SMILES_FILEPATH = "utils/resources/my_smiles.txt"
@@ -63,7 +63,7 @@ def generate_smiles(generated_smiles=300):
             if set(new_smile) == "C":
                 continue
             file.write(f"{new_smile}\n")
-    print(f"File created for submission with {generated_smiles}k smiles in my_smiles.txt")
+    print(f"File created for submission with {generated_smiles}k smiles in {SUBMISSION_SMILES_FILEPATH}")
 
 
 generate_smiles(generated_smiles=10000)
