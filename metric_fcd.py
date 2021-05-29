@@ -60,3 +60,58 @@ if __name__ == '__main__':
 # Validity:  0.9138
 # Uniqueness:  0.9131
 # Novelty:  0.8972
+
+# temperature 85
+# FCD: 1.214
+# Validity:  0.9457
+# Uniqueness:  0.9454
+# Novelty:  0.9159
+
+# temperature 88
+# FCD: 1.096
+# Validity:  0.9407
+# Uniqueness:  0.9402
+# Novelty:  0.9106
+
+# temperature 90
+# FCD: 1.023
+# Validity:  0.9311
+# Uniqueness:  0.9304
+# Novelty:  0.905
+
+
+# temperature 92
+# FCD: 0.956
+# Validity:  0.927
+# Uniqueness:  0.9263
+# Novelty:  0.9016
+
+# temperature 95
+# FCD: 0.947
+# Validity:  0.9227
+# Uniqueness:  0.9223
+# Novelty:  0.8998
+
+# temperature 99
+# FCD: 0.927
+# Validity:  0.9043
+# Uniqueness:  0.9039
+# Novelty:  0.8831
+
+
+# keep training it...with xtemperature 99 by default
+
+# FCD: 0.686
+# Validity:  0.9019
+# Uniqueness:  0.9016
+# Novelty:  0.8796
+
+# FCD: 0.637
+# Validity:  0.9083
+# Uniqueness:  0.9082
+# Novelty:  0.8919
+
+# FCD: 0.620
+# Validity:  0.911
+# Uniqueness:  0.9108
+# Novelty:  0.8946
