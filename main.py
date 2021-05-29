@@ -48,7 +48,6 @@ def train(device, save=False):
             hidden = model.init_hidden(batch_size)
             hidden = (hidden[0].to(device), hidden[1].to(device))
 
-            model.zero_grad()
             optimizer.zero_grad()
 
             loss = 0
