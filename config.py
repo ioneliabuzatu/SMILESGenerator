@@ -3,7 +3,7 @@ import experiment_buddy
 
 import torch.nn as nn
 
-host = ""
+host = "mila"
 
 hidden_size = 1024
 embedding_dimension = 248
