@@ -9,7 +9,8 @@
 
 1. First preprocess the data for the training with running
    ```python utils/preprocess_training_data.py```. This will create a file needed for th training under 
-   `utils/resources/data/train_val_btaches.npz`
+   `utils/resources/data/train_val_btaches.npz`. You can skip this step by downloading the preprocessed data from 
+   [here](https://drive.google.com/file/d/1NxK0qCNYdVDi0bRVf5gstusjMnW1VZ6o/view?usp=sharing).
 2. Then train model with ```python main.py```
 3. Evaluate model according to the [FCD](https://github.com/bioinf-jku/FCD) metric with `metric_fcd.py`, gviven you 
    have a file `my_smiles.txt` - check `Notes` section below.
