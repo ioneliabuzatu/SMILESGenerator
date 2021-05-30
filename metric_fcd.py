@@ -49,14 +49,3 @@ def get_metrics():
 
 if __name__ == '__main__':
     get_metrics()
-
-
-# FCD:  1.929
-# Validity:  0.8822
-# Uniqueness:  0.8809
-# Novelty:  0.8593
-
-# FCD: 1.481
-# Validity:  0.9138
-# Uniqueness:  0.9131
-# Novelty:  0.8972

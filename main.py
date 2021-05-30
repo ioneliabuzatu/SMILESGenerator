@@ -1,12 +1,10 @@
 import torch
-from torch.utils.data import DataLoader
-from utils.data import load_train_and_val_batches_data
+from tqdm import tqdm
 
 import config
-from utils.dataset import SmilesDataset
 from model import GenerativeMoleculesModel
-from tqdm import tqdm
 from utils.data import load_train_and_val_batches_data
+from utils.dataset import SmilesDataset
 
 writer = config.tensorboard
 
@@ -48,7 +46,6 @@ def train(device, save=False):
             hidden = model.init_hidden(batch_size)
             hidden = (hidden[0].to(device), hidden[1].to(device))
 
-            model.zero_grad()
             optimizer.zero_grad()
 
             loss = 0
@@ -64,8 +61,6 @@ def train(device, save=False):
             writer.add_scalar('train_loss', loss.item() / sequence_length, scalars_loss_step)
             scalars_loss_step += 1
 
-            # if i_batch == 3:
-            #     break
         print(f"Done epoch # {epoch} - loss {epoch_loss}")
         if save:
             if config.bidirectional:

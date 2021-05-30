@@ -133,3 +133,4 @@ Generate-novel-molecules-with-LSTM/
 *.pt
 *.pt_bidirectional
 utils/resources/my_smiles_1.4fcd.txt
+*npz
