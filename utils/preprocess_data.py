@@ -1,8 +1,10 @@
+import numpy as np
+import pandas as pd
+import torch
 import tqdm
 from torch.autograd import Variable
-import torch
-import pandas as pd
-import numpy as np
+
+from utils.data import tensor_from_chars_list
 
 
 def added_to_dictionary(smile, dictionary):
@@ -31,13 +33,6 @@ def to_numpy_compress(save=True):
     if save:
         np.savez_compressed('utils/resources/data/smiles_data.npz', data_set=data_set, vocabs=vocabs)
     return data_set, vocabs
-
-
-def tensor_from_chars_list(chars_list, vocabs):
-    tensor = torch.zeros(len(chars_list)).long()
-    for c in range(len(chars_list)):
-        tensor[c] = vocabs.index(chars_list[c])
-    return tensor.view(1, -1)
 
 
 def process_batch(sequences, batch_size, vocabs):

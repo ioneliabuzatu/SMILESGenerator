@@ -23,10 +23,8 @@ def evaluate(model, vocabs, device, prime_str='!', end_token=" ", temperature=0.
     predicted = prime_str
     while True:
         output, hidden = model(inp, hidden)
-        # Sample from the network as a multinomial distribution
         output_dist = output.data.view(-1).div(temperature).exp()
         top_i = torch.multinomial(output_dist, 1)[0]
-        # Add predicted character to string and use as next input
         predicted_char = vocabs[top_i]
 
         if predicted_char == end_token or len(predicted) > max_length:
@@ -47,7 +45,8 @@ def generate_smiles(generated_smiles=300):
     print(f"Running on device: {device}")
     f = np.load(SMILES_DATA_FILEPATH, allow_pickle=True)
     vocabs = list(f['vocabs'])
-    model = GenerativeMoleculesModel(vocabs_size, hidden_size, output_size, embedding_dimension, n_layers, config.bidirectional)
+    model = GenerativeMoleculesModel(vocabs_size, hidden_size, output_size, embedding_dimension, n_layers,
+                                     config.bidirectional)
     model = model.to(device)
     model.load_state_dict(torch.load(CHECKPOINT_FILEPATH))
     with open(SUBMISSION_SMILES_FILEPATH, "a") as file:

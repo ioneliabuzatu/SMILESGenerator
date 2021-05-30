@@ -26,7 +26,7 @@ def train(device, save=False):
     )
     print(model)
 
-    if not config.bidirectional:
+    if not config.bidirectional and config.pretrained_filepath:
         model.load_state_dict(torch.load(config.pretrained_filepath))
 
     model = model.to(device)

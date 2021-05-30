@@ -18,7 +18,7 @@ epochs = 300
 
 criterion = nn.CrossEntropyLoss()
 
-pretrained_filepath = "smiles_generator_model.pt"
+pretrained_filepath = ""
 checkpoint_filepath = "checkpoint_generator_model.pt"
 
 experiment_buddy.register(locals())

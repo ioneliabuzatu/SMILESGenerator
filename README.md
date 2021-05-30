@@ -11,7 +11,12 @@
    ```python utils/preprocess_training_data.py```. This will create a file needed for th training under 
    `utils/resources/data/train_val_btaches.npz`
 2. Then train model with ```python main.py```
-3. Evaluate model according to the [FCD](https://github.com/bioinf-jku/FCD) metric with `metric_fcd.py`
+3. Evaluate model according to the [FCD](https://github.com/bioinf-jku/FCD) metric with `metric_fcd.py`, gviven you 
+   have a file `my_smiles.txt` - check `Notes` section below.
 
 This code is based on the paper [Generating Focussed Molecule Libraries for Drug
 Discovery with Recurrent Neural Networks, Segler et al, 2017](https://arxiv.org/pdf/1701.01329.pdf)
+
+### Evaluation
+After training evaluate the pretrained model with the file `generate_10k_smiles.py` - you will need to change the 
+filepaths in `generate_smiles.py` accordingly.
